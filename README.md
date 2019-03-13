@@ -1,6 +1,7 @@
 # Java based Multi-threaded File server Application meant to satisfy multiple client requests through socket connections/request
 
-# Working principle : Multiple clients talk to a single server through common/ constant port number (in a network, a port binding), each client request serves as a new server connection (aka a client handler), on every new client request invocation the main thread at the server starts a new daemon/background thread through start method thus calls run method implemented via Runnable interface. Thus server serves the client request through a separate server connection thread and creates a new socket connection.
+## Working principle : 
+Multiple clients talk to a single server through common/ constant port number (in a network, a port binding), each client request serves as a new server connection (aka a client handler), on every new client request invocation the main thread at the server starts a new daemon/background thread through start method thus calls run method implemented via Runnable interface. Thus server serves the client request through a separate server connection thread and creates a new socket connection.
 
 ## Tasks : client may invoke two operations:  index  and  get "filename.txt".
 index should return the total available files stored at the server, in this project these files are stored in a folder called "files", namely two files , names.txt and companies.txt  : return these file names.
