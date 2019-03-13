@@ -1,3 +1,8 @@
+/*
+ * custom exception class for handling various error handling conditions based on the client input
+ * 
+ * */
+
 package com.fileserverapp.exception;
 
 public class InvalidOperationException extends Exception {

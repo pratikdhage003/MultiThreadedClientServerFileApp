@@ -1,3 +1,7 @@
+/*
+ * Server and client both listen to the same port here its 9999
+ * */
+
 package com.fileserverapp.constants;
 
 public class ConstantsFile {

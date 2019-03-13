@@ -1,3 +1,9 @@
+/*
+ * This is an entry point where initial execution begins, 
+ * after this one start calling client programs,
+ *  which would be started by the daemon thread created by main program using start method
+ * */
+
 package com.fileserverapp.server;
 
 
@@ -17,6 +23,7 @@ public class MultiThreadedFileServer {
 			int connectionCount = 1;
 			// The main thread is just accepting new connections
 			while (true) {
+				//per client request new socket is created
 				Socket client = server.accept();
 
 				FileServerConnection fileReaderClientSock = new FileServerConnection(client);
@@ -30,7 +37,8 @@ public class MultiThreadedFileServer {
 				System.out.println("\nNew connection from : " + newClientConnection.getName() + " at the ip address "
 						+ client.getInetAddress().getHostAddress() + " and port number : " + client.getLocalPort());
 
-				// Daemon will handle each every client separately
+				// here Daemon/background will handle each every client separately through 
+				// client handler called as FileServerConnection
 				newClientConnection.start();
 
 				connectionCount++;

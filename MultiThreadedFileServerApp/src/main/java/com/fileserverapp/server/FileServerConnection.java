@@ -1,3 +1,8 @@
+/*
+ * Works as client handler serving multiple client request and thus creates new thread/request 
+ * 
+ * */
+
 package com.fileserverapp.server;
 
 import java.io.*;
@@ -28,13 +33,15 @@ public class FileServerConnection implements Runnable {
 			String paramList[] = params.split(" ");
 			List<String> fileList;
 
+			/*check for what operations are allowed such as index and get
+			 * and command line argument size*/
 			if (paramList.length == 0 || paramList.length > 2
 					|| (paramList.length == 1 && !paramList[0].equals("index"))) {
 				
 				throw new InvalidOperationException("Invalid parameters....");
 
 			} else {
-
+				/* these are  permitted operations supported by the server */
 				if (paramList[0].equals("index") || paramList[0].equals("get")) {
 
 					System.out.println("\nServer received operation: " + params + " , from : "
@@ -66,6 +73,7 @@ public class FileServerConnection implements Runnable {
 						String s;
 						boolean done = false;
 
+						/*if file is present then copy its content*/
 						for (String file : fileList) {
 							if (fileName.equals(file)) {
 								s = new String(Files.readAllBytes(Paths.get(folder + "/" + fileName)), "UTF-8");
@@ -73,12 +81,13 @@ public class FileServerConnection implements Runnable {
 								done = true;
 							}
 						}
-
+						/*it means file was not present*/
 						if (!done) {
 							System.out.println("Could not find requested file on the server...");
 							throw new InvalidOperationException("ERROR..... File does exist on the server");
 						}
-
+						/*Successfully found the file and thus return its content to the specific client 
+						 * and flush the data back to the given client */
 						else {
 							dOut = new DataOutputStream(clientSocket.getOutputStream());
 							System.out.println("Found the file : " + fileName + ", sending its content back to the  : "
@@ -88,6 +97,7 @@ public class FileServerConnection implements Runnable {
 						}
 					}
 				}else{
+					/*we are here because the client did not send sever permitted command*/
 					throw new InvalidOperationException("UNKNOWN COMMAND.....");
 				}
 			}
@@ -122,7 +132,7 @@ public class FileServerConnection implements Runnable {
 	}
 
 	/*
-	 * return the list of files after recursively searching inside the current directory
+	 * return the list of files after recursively searching inside the folder named "files"
 	 * */
 	public static List<String> listFiles(final File folder) {
 
