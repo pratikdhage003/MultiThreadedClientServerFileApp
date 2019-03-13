@@ -8,7 +8,8 @@ index should return the total available files stored at the server, in this proj
 
 upon invocation by a client program "get names.txt" operation server should not only send back an OK messages but its content as well.
 
-## Data transfer mechanism : using input and output streams between client and server.
+## Data transfer mechanism : 
+using input and output streams between both client and the server, data is flushed and sent to-and-fro over the network.
 
 
 ## How to Run: 
