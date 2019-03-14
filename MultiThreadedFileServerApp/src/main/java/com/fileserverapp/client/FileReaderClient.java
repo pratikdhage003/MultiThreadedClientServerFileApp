@@ -62,6 +62,11 @@ public class FileReaderClient {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			/*
+			 * this ensures that as the client request is served no new request
+			 * is made and connection is closed by introducing error handling
+			 * mechanism
+			 */
 			try {
 				throw new InvalidOperationException(
 						"Connection closed from the server side ..can not server a new request for this client...");
