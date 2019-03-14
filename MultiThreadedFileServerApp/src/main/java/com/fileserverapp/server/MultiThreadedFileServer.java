@@ -1,7 +1,7 @@
 /*
  * This is an entry point where initial execution begins, 
  * after this one start calling client programs,
- *  which would be started by the daemon thread created by main program using start method
+ *  which would be started by the worker thread created by main program using start method
  * */
 
 package com.fileserverapp.server;
