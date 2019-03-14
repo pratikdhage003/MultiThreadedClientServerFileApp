@@ -9,6 +9,7 @@ import java.net.*;
 import java.util.*;
 
 import com.fileserverapp.constants.ConstantsFile;
+import com.fileserverapp.exception.InvalidOperationException;
 
 public class FileReaderClient {
 
@@ -18,19 +19,22 @@ public class FileReaderClient {
 
 		try {
 
-			/*client socket and server socket are listening to the same port number, 
-			 * hence both points to global constant declared for the port number*/
+			/*
+			 * client socket and server socket are listening to the same port
+			 * number, hence both points to global constant declared for the
+			 * port number
+			 */
 			Socket socket = new Socket(ConstantsFile.GUEST_IP_ADDRESS, ConstantsFile.GLOBAL_SOCKET_LISTENING_PORT);
 
+			/*
+			 * provision for command-line input for a given operation for
+			 * example, get names.txt
+			 */
 
-			/* provision for command-line input for a given operation 
-			 * for example,  get names.txt
-			 * */
-			
 			BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 
-			System.out.println("\nThis is a new Client at address : " + socket.getInetAddress().getHostAddress() + " and port : "
-					+ socket.getPort());
+			System.out.println("\nThis is a new Client at address : " + socket.getInetAddress().getHostAddress()
+					+ " and port : " + socket.getPort());
 
 			System.out.println("Please enter the operation: ");
 
@@ -49,7 +53,7 @@ public class FileReaderClient {
 				line = scanner.nextLine();
 				out.println(line);
 				out.flush();
-				/*receives the data sent by the background thread*/
+				/* receives the data sent by the background thread */
 				System.out.println("Server replied: \n\n" + dIn.readUTF());
 			}
 			scanner.close();
@@ -58,7 +62,13 @@ public class FileReaderClient {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			try {
+				throw new InvalidOperationException(
+						"Connection closed from the server side ..can not server a new request for this client...");
+			} catch (InvalidOperationException e1) {
+				System.out.println(
+						"Connection closed from the server side ..can not server a new request for the this client .");
+			}
 		}
 	}
 
